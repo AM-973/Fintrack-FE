@@ -65,87 +65,87 @@ const App = () => {
     }
   }
 
-  const handleAddProject = async (formData) => {
-    try {
-      const newProject = await projectService.create(formData)
-      setProjects([newProject, ...projects])
-      navigate('/projects')
-    } catch (err) {
-      console.error('Failed to create project:', err)
-    }
-  }
+  // const handleAddProject = async (formData) => {
+  //   try {
+  //     const newProject = await projectService.create(formData)
+  //     setProjects([newProject, ...projects])
+  //     navigate('/projects')
+  //   } catch (err) {
+  //     console.error('Failed to create project:', err)
+  //   }
+  // }
 
-  const handleDeleteProject = async (projectId) => {
-    try {
-      await projectService.deleteProject(projectId)
-      setProjects(projects.filter((project) => project.id !== projectId))
-      navigate('/projects')
-    } catch (err) {
-      console.error('Failed to delete project:', err)
-    }
-  }
+  // const handleDeleteProject = async (projectId) => {
+  //   try {
+  //     await projectService.deleteProject(projectId)
+  //     setProjects(projects.filter((project) => project.id !== projectId))
+  //     navigate('/projects')
+  //   } catch (err) {
+  //     console.error('Failed to delete project:', err)
+  //   }
+  // }
 
-  const handleUpdateProject = async (formData, projectId) => {
-    try {
-      const updatedProject = await projectService.update(formData, projectId)
-      setProjects(projects.map(p => p.id === projectId ? updatedProject : p))
-      navigate(`/projects/${projectId}`)
-    } catch (err) {
-      console.error('Failed to update project:', err)
-    }
-  }
+  // const handleUpdateProject = async (formData, projectId) => {
+  //   try {
+  //     const updatedProject = await projectService.update(formData, projectId)
+  //     setProjects(projects.map(p => p.id === projectId ? updatedProject : p))
+  //     navigate(`/projects/${projectId}`)
+  //   } catch (err) {
+  //     console.error('Failed to update project:', err)
+  //   }
+  // }
 
-  const handleAddCategory = async (formData, projectId) => {
-    try {
-      await categoryService.create(formData, projectId)
+  // const handleAddCategory = async (formData, projectId) => {
+  //   try {
+  //     await categoryService.create(formData, projectId)
      
-    } catch (err) {
-      console.error('Failed to create category:', err)
-    }
-  }
+  //   } catch (err) {
+  //     console.error('Failed to create category:', err)
+  //   }
+  // }
 
-  const handleUpdateCategory = async (formData, categoryId) => {
-    try {
-      await categoryService.update(formData, categoryId)
+  // const handleUpdateCategory = async (formData, categoryId) => {
+  //   try {
+  //     await categoryService.update(formData, categoryId)
      
-    } catch (err) {
-      console.error('Failed to update category:', err)
-    }
-  }
+  //   } catch (err) {
+  //     console.error('Failed to update category:', err)
+  //   }
+  // }
 
-  const handleDeleteCategory = async (categoryId) => {
-    try {
-      await categoryService.deleteCategory(categoryId)
-    } catch (err) {
-      console.error('Failed to delete category:', err)
-    }
-  }
+  // const handleDeleteCategory = async (categoryId) => {
+  //   try {
+  //     await categoryService.deleteCategory(categoryId)
+  //   } catch (err) {
+  //     console.error('Failed to delete category:', err)
+  //   }
+  // }
 
-  const handleAddExpense = async (formData, categoryId) => {
-    try {
-      await expenseService.create(formData, categoryId)
+  // const handleAddExpense = async (formData, categoryId) => {
+  //   try {
+  //     await expenseService.create(formData, categoryId)
       
-    } catch (err) {
-      console.error('Failed to create expense:', err)
-    }
-  }
+  //   } catch (err) {
+  //     console.error('Failed to create expense:', err)
+  //   }
+  // }
 
-  const handleUpdateExpense = async (formData, expenseId) => {
-    try {
-      await expenseService.update(formData, expenseId)
+  // const handleUpdateExpense = async (formData, expenseId) => {
+  //   try {
+  //     await expenseService.update(formData, expenseId)
      
-    } catch (err) {
-      console.error('Failed to update expense:', err)
-    }
-  }
+  //   } catch (err) {
+  //     console.error('Failed to update expense:', err)
+  //   }
+  // }
 
-  const handleDeleteExpense = async (expenseId) => {
-    try {
-      await expenseService.deleteExpense(expenseId)
-    } catch (err) {
-      console.error('Failed to delete expense:', err)
-    }
-  }
+  // const handleDeleteExpense = async (expenseId) => {
+  //   try {
+  //     await expenseService.deleteExpense(expenseId)
+  //   } catch (err) {
+  //     console.error('Failed to delete expense:', err)
+  //   }
+  // }
 
   return (
     <>
