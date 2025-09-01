@@ -25,5 +25,7 @@ export default defineConfig([
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
+    'react/prop-types': 'off', 
+    'react/no-unescaped-entities': 'off'
   },
 ])

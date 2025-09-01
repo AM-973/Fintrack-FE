@@ -1,4 +1,4 @@
-const BASE_URL = `${import.meta.env.FASTAPI_BACK_END_SERVER_URL}|| http://127.0.0.1:8000/api`
+const BASE_URL = `${import.meta.env.FASTAPI_BACK_END_SERVER_URL}`
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token')
