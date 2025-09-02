@@ -67,14 +67,15 @@ const NavBar = (props) => {
                   Welcome, {props.user.username}
                 </span>
               )}
-              <Link to='/dashboard' className={`btn btn--ghost ${styles.profileBtn}`}>
-                Dashboard
+              <Link to='/dashboard' className={`btn btn--ghost ${styles.profileBtn}`} style={{cursor: 'not-allowed'}} disabled={true} >
+                Dashboard WIP 🇧🇭
               </Link>
               <button 
                 onClick={props.handleSignOut} 
                 className="btn btn--ghost"
                 type="button"
                 aria-label="Sign out of your account"
+                
               >
                 Sign Out
               </button>
