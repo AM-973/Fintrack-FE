@@ -38,6 +38,16 @@ const NavBar = (props) => {
                 Projects
               </Link>
             </li>
+            <li>
+
+              <Link 
+                to="/create-project" 
+                className={`${styles.navLink} ${isActiveLink('/create-project') ? styles.navLinkActive : ''}`}
+                aria-current={isActiveLink('/create-project') ? 'page' : undefined}
+              >
+                create project
+              </Link>
+            </li>
           </ul>
         </nav>
         
