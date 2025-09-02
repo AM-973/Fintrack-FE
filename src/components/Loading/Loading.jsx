@@ -1,12 +1,16 @@
-// src/components/Loading/Loading.jsx
 
 import styles from './Loading.module.css'
 
-const Loading = () => {
+const Loading = ({ message = "Loading...", size = "medium", variant = "default" }) => {
+  const containerClass = `${styles.container} ${variant === 'fullscreen' ? styles['container--fullscreen'] : ''} ${variant === 'inline' ? styles['container--inline'] : ''}`
+  
   return (
-    <main className={styles.container}>
-      <h1>Loading...</h1>
-    </main>
+    <div className={containerClass}>
+      <div className={`${styles.spinner} ${styles[`spinner--${size}`]}`}>
+        <div className={styles.spinnerInner}></div>
+      </div>
+      <p className={styles.text}>{message}</p>
+    </div>
   )
 }
 
