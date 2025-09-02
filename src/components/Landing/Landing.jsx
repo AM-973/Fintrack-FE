@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import styles from './Landing.module.css'
+import * as authService from '../../services/authService'
 
 const Landing = () => {
+  const user = authService.getUser()
   return (
     <main className={styles.container}>
       <section className={styles.hero}>
@@ -17,12 +19,22 @@ const Landing = () => {
               financial tracker. Turn your financial goals into reality with organized project-based savings.
             </p>
             <div className={styles.heroActions}>
-              <Link to="/projects" className="btn btn--primary btn--lg">
+              {user ? (
+                <>
+                <Link to="/projects" className="btn btn--primary btn--lg">
+                  Start Tracking
+                </Link>
+                </>
+              ) : (
+                <>
+                <Link to="/sign-in" className="btn btn--primary btn--lg">
                 Start Tracking
               </Link>
               <Link to="/sign-up" className="btn btn--secondary btn--lg">
                 Get Started
               </Link>
+              </>
+              )}
             </div>
           </div>
         </div>
@@ -59,7 +71,7 @@ const Landing = () => {
               <div className={styles.featureIcon}>📈</div>
               <h3 className={styles.featureTitle}>Budget Monitoring</h3>
               <p className={styles.featureDescription}>
-                Stay on track with real-time budget monitoring and expense alerts.
+                Stay on track with our smart budget and monitoring and auto calculations.
               </p>
             </article>
           </div>
@@ -83,7 +95,7 @@ const Landing = () => {
                 <p>
                   Whether you're saving for a vacation, home renovation, or building an emergency fund, 
                   our platform makes it simple to organize, track, and achieve your financial goals 
-                  with clear project-based structure and detailed expense tracking.
+                  with clear project-based structure organized into categories with detailed expense tracking.
                 </p>
               </div>
             </div>
@@ -120,8 +132,8 @@ const Landing = () => {
             </blockquote>
             <footer className={styles.testimonialFooter}>
               <div className={styles.testimonialAuthor}>
-                <strong>Alex Chen</strong>
-                <span>Financial Planning Enthusiast</span>
+                <strong>Mohammed Mohammed</strong>
+                <span> - Financial Planning Enthusiast</span>
               </div>
             </footer>
           </div>
@@ -135,11 +147,23 @@ const Landing = () => {
             <p className={styles.ctaDescription}>
               Join users who are successfully managing their money with organized project-based tracking.
             </p>
-            <div className={styles.ctaActions}>
+            {user ? (
+              <>
+                            <Link to="/projects" className="btn btn--primary btn--lg">
+                Create your first project!
+              </Link>
+              </>
+            ) : (
+              <>
+              <div className={styles.ctaActions}>
               <Link to="/sign-up" className="btn btn--primary btn--lg">
                 Sign Up Now
               </Link>
+
             </div>
+              </>
+            )}
+            
           </div>
         </div>
       </section>

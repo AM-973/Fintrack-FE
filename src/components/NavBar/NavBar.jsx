@@ -15,10 +15,11 @@ const NavBar = (props) => {
     <header className={styles.navbar} role="banner">
       <div className={`container ${styles.container}`}>
         <Link to='/' className={styles.brand} aria-label="FinTrack - Home">
-          <span className={styles.brandText}>FinTrack</span>
+          <span className={styles.brandText}>FinTrack🇧🇭</span>
         </Link>
-        
-        <nav className={styles.nav} role="navigation" aria-label="Main navigation">
+        {props.user?(
+          <>
+                  <nav className={styles.nav} role="navigation" aria-label="Main navigation">
           <ul className={styles.navList}>
             <li>
               <Link 
@@ -29,18 +30,35 @@ const NavBar = (props) => {
                 Home
               </Link>
             </li>
+            
             <li>
               <Link 
                 to="/projects" 
                 className={`${styles.navLink} ${isActiveLink('/projects') ? styles.navLinkActive : ''}`}
-                aria-current={isActiveLink('/projects') ? 'page' : undefined}
-              >
+                aria-current={isActiveLink('/projects') ? 'page' : undefined}>
                 Projects
               </Link>
             </li>
           </ul>
         </nav>
-        
+          </>
+        ) : (
+          <>
+          <nav className={styles.nav} role="navigation" aria-label="Main navigation">
+          <ul className={styles.navList}>
+            <li>
+              <Link 
+                to="/" 
+                className={`${styles.navLink} ${isActiveLink('/') ? styles.navLinkActive : ''}`}
+                aria-current={isActiveLink('/') ? 'page' : undefined}
+              >
+                Home
+              </Link>
+            </li>
+          </ul>
+        </nav>
+          </>
+        )}
         <div className={styles.actions}>
           {props.user ? (
             <>
