@@ -7,13 +7,13 @@ import SignIn from './components/SignIn/SignIn'
 import ProjectList from './components/ProjectList/ProjectList'
 import ProjectDetails from './components/ProjectDetails/ProjectDetails'
 import ProjectForm from './components/ProjectForm/ProjectForm'
-// import CategoryForm from './components/CategoryForm/CategoryForm'
-// import CategoryDetails from './components/CategoryDetails/CategoryDetails'
-// import ExpenseForm from './components/ExpenseForm/ExpenseForm'
+import CategoryForm from './components/CategoryForm/CategoryForm'
+import CategoryDetails from './components/CategoryDetails/CategoryDetails'
+import ExpenseForm from './components/ExpenseForm/ExpenseForm'
 import * as authService from './services/authService.js'
 import * as projectService from './services/projectService'
-// import * as categoryService from './services/categoryService'
-// import * as expenseService from './services/expenseService'
+import * as categoryService from './services/categoryService'
+import * as expenseService from './services/expenseService'
 import Landing from './components/Landing/Landing'
 import CalculationForm from './components/Calculation/CalculationForm.jsx'
 import BarChartDisplay from './components/Chart/PieChartDisplay.jsx'
@@ -97,57 +97,57 @@ const App = () => {
     }
   }
 
-  // const handleAddCategory = async (formData, projectId) => {
-  //   try {
-  //     await categoryService.create(formData, projectId)
+  const handleAddCategory = async (formData, projectId) => {
+    try {
+      await categoryService.create(formData, projectId)
      
-  //   } catch (err) {
-  //     console.error('Failed to create category:', err)
-  //   }
-  // }
+    } catch (err) {
+      console.error('Failed to create category:', err)
+    }
+  }
 
-  // const handleUpdateCategory = async (formData, categoryId) => {
-  //   try {
-  //     await categoryService.update(formData, categoryId)
+  const handleUpdateCategory = async (formData, categoryId) => {
+    try {
+      await categoryService.update(formData, categoryId)
      
-  //   } catch (err) {
-  //     console.error('Failed to update category:', err)
-  //   }
-  // }
+    } catch (err) {
+      console.error('Failed to update category:', err)
+    }
+  }
 
-  // const handleDeleteCategory = async (categoryId) => {
-  //   try {
-  //     await categoryService.deleteCategory(categoryId)
-  //   } catch (err) {
-  //     console.error('Failed to delete category:', err)
-  //   }
-  // }
+  const handleDeleteCategory = async (categoryId) => {
+    try {
+      await categoryService.deleteCategory(categoryId)
+    } catch (err) {
+      console.error('Failed to delete category:', err)
+    }
+  }
 
-  // const handleAddExpense = async (formData, categoryId) => {
-  //   try {
-  //     await expenseService.create(formData, categoryId)
+  const handleAddExpense = async (formData, categoryId) => {
+    try {
+      await expenseService.create(formData, categoryId)
       
-  //   } catch (err) {
-  //     console.error('Failed to create expense:', err)
-  //   }
-  // }
+    } catch (err) {
+      console.error('Failed to create expense:', err)
+    }
+  }
 
-  // const handleUpdateExpense = async (formData, expenseId) => {
-  //   try {
-  //     await expenseService.update(formData, expenseId)
+  const handleUpdateExpense = async (formData, expenseId) => {
+    try {
+      await expenseService.update(formData, expenseId)
      
-  //   } catch (err) {
-  //     console.error('Failed to update expense:', err)
-  //   }
-  // }
+    } catch (err) {
+      console.error('Failed to update expense:', err)
+    }
+  }
 
-  // const handleDeleteExpense = async (expenseId) => {
-  //   try {
-  //     await expenseService.deleteExpense(expenseId)
-  //   } catch (err) {
-  //     console.error('Failed to delete expense:', err)
-  //   }
-  // }
+  const handleDeleteExpense = async (expenseId) => {
+    try {
+      await expenseService.deleteExpense(expenseId)
+    } catch (err) {
+      console.error('Failed to delete expense:', err)
+    }
+  }
 
   return (
     <>
@@ -160,11 +160,11 @@ const App = () => {
             <Route path='/projects/new' element={<ProjectForm handleAddProject={handleAddProject} />} />
             <Route path='/projects/:projectId' element={<ProjectDetails user={user} handleDeleteProject={handleDeleteProject} />} />
             <Route path='/projects/:projectId/edit' element={<ProjectForm handleUpdateProject={handleUpdateProject} />} />
-            {/* <Route path='/projects/:projectId/categories/new' element={<CategoryForm handleAddCategory={handleAddCategory} />} />
-            <Route path='/categories/:categoryId' element={<CategoryDetails user={user} handleDeleteCategory={handleDeleteCategory} handleDeleteExpense={handleDeleteExpense} />} />
-            <Route path='/categories/:categoryId/edit' element={<CategoryForm handleUpdateCategory={handleUpdateCategory} />} />
-            <Route path='/categories/:categoryId/expenses/new' element={<ExpenseForm handleAddExpense={handleAddExpense} />} />
-            <Route path='/categories/:categoryId/expenses/:expenseId/edit' element={<ExpenseForm handleUpdateExpense={handleUpdateExpense} />} /> } */}
+            <Route path='/projects/:projectId/categories/new' element={<CategoryForm />} handleAddCategory={handleAddCategory} />
+            <Route path='/categories/:categoryId' element={<CategoryDetails />} handleDeleteCategory={handleDeleteCategory} />
+            <Route path='/categories/:categoryId/edit' element={<CategoryForm />} handleUpdateCategory={handleUpdateCategory} />
+            <Route path='/categories/:categoryId/expenses/new' element={<ExpenseForm />} handleAddExpense={handleAddExpense} />
+            <Route path='/categories/:categoryId/expenses/:expenseId/edit' element={<ExpenseForm />} handleUpdateExpense={handleUpdateExpense} />
             </>
           ) : (
             <> 
