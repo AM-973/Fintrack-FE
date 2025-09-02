@@ -15,7 +15,8 @@ import * as projectService from './services/projectService'
 // import * as categoryService from './services/categoryService'
 // import * as expenseService from './services/expenseService'
 import Landing from './components/Landing/Landing'
-// import Dashboard from './components/Dashboard/Dashboard'
+import CalculationForm from './components/Calculation/CalculationForm.jsx'
+import BarChartDisplay from './components/Chart/PieChartDisplay.jsx'
 
 const App = () => {
   const navigate = useNavigate()
