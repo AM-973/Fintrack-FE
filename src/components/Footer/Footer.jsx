@@ -22,7 +22,7 @@ const Footer = () => {
                 aria-label="Follow us on GitHub"
                 title="GitHub"
               >
-                <span className={styles.socialIcon}><img src="/public/assets/githubicon.svg" alt="GitHub logo" width={70} height={70} /></span>
+                <span className={styles.socialIcon}><img src="/assets/githubicon.svg" alt="GitHub logo" width={70} height={70} /></span>
               </a>
             </div>
           </div>
