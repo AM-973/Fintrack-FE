@@ -8,9 +8,9 @@ const getAuthHeaders = () => {
   }
 }
 
-const getByCategory = async (categoryId) => {
+const getByCategory = async (projectId, categoryId) => {
   try {
-    const res = await fetch(`${BASE_URL}/categories/${categoryId}/expenses`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}/expenses`, {
       headers: getAuthHeaders()
     })
     const data = await res.json()
@@ -21,9 +21,9 @@ const getByCategory = async (categoryId) => {
   }
 }
 
-const show = async (categoryId, expenseId) => {
+const show = async (projectId, categoryId, expenseId) => {
   try {
-    const res = await fetch(`${BASE_URL}/categories/${categoryId}/expenses/${expenseId}`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}/expenses/${expenseId}`, {
       headers: getAuthHeaders()
     })
     const data = await res.json()
@@ -34,9 +34,9 @@ const show = async (categoryId, expenseId) => {
   }
 }
 
-const create = async (formData, categoryId) => {
+const create = async (formData, projectId, categoryId) => {
   try {
-    const res = await fetch(`${BASE_URL}/categories/${categoryId}/expenses`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}/expenses`, {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(formData)
@@ -49,9 +49,9 @@ const create = async (formData, categoryId) => {
   }
 }
 
-const update = async (formData, expenseId) => {
+const update = async (formData, projectId, categoryId, expenseId) => {
   try {
-    const res = await fetch(`${BASE_URL}/expenses/${expenseId}`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}/expenses/${expenseId}`, {
       method: 'PUT',
       headers: getAuthHeaders(),
       body: JSON.stringify(formData)
@@ -64,9 +64,9 @@ const update = async (formData, expenseId) => {
   }
 }
 
-const deleteExpense = async (expenseId) => {
+const deleteExpense = async (projectId, categoryId, expenseId) => {
   try {
-    const res = await fetch(`${BASE_URL}/expenses/${expenseId}`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}/expenses/${expenseId}`, {
       method: 'DELETE',
       headers: getAuthHeaders()
     })

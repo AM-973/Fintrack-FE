@@ -160,11 +160,11 @@ const App = () => {
             <Route path='/projects/new' element={<ProjectForm handleAddProject={handleAddProject} />} />
             <Route path='/projects/:projectId' element={<ProjectDetails user={user} handleDeleteProject={handleDeleteProject} />} />
             <Route path='/projects/:projectId/edit' element={<ProjectForm handleUpdateProject={handleUpdateProject} />} />
-            <Route path='/projects/:projectId/categories/new' element={<CategoryForm />} handleAddCategory={handleAddCategory} />
-            <Route path='/categories/:categoryId' element={<CategoryDetails />} handleDeleteCategory={handleDeleteCategory} />
-            <Route path='/categories/:categoryId/edit' element={<CategoryForm />} handleUpdateCategory={handleUpdateCategory} />
-            <Route path='/categories/:categoryId/expenses/new' element={<ExpenseForm />} handleAddExpense={handleAddExpense} />
-            <Route path='/categories/:categoryId/expenses/:expenseId/edit' element={<ExpenseForm />} handleUpdateExpense={handleUpdateExpense} />
+            <Route path='/projects/:projectId/categories/new' element={<CategoryForm />} />
+            <Route path='/projects/:projectId/categories/:categoryId' element={<CategoryDetails />} />
+            <Route path='/projects/:projectId/categories/:categoryId/edit' element={<CategoryForm />} />
+            <Route path='/projects/:projectId/categories/:categoryId/expenses/new' element={<ExpenseForm />} />
+            <Route path='/projects/:projectId/categories/:categoryId/expenses/:expenseId/edit' element={<ExpenseForm />} />
             </>
           ) : (
             <> 

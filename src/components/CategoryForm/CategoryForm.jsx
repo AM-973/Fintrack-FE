@@ -25,7 +25,7 @@ const CategoryForm = () => {
   const fetchCategory = async () => {
     try {
       setLoading(true)
-      const category = await categoryService.show(categoryId)
+      const category = await categoryService.show(projectId, categoryId)
       setFormData({
         name: category.name,
         description: category.description || '',
@@ -74,7 +74,7 @@ const CategoryForm = () => {
       }
 
       if (isEdit) {
-        await categoryService.update(categoryData, categoryId)
+        await categoryService.update(categoryData, projectId, categoryId)
       } else {
         await categoryService.create(categoryData, projectId)
       }

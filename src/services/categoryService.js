@@ -21,9 +21,9 @@ const getByProject = async (projectId) => {
   }
 }
 
-const show = async (categoryId) => {
+const show = async (projectId, categoryId) => {
   try {
-    const res = await fetch(`${BASE_URL}/categories/${categoryId}`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}`, {
       headers: getAuthHeaders()
     })
     const data = await res.json()
@@ -49,9 +49,9 @@ const create = async (formData, projectId) => {
   }
 }
 
-const update = async (formData, categoryId) => {
+const update = async (formData, projectId, categoryId) => {
   try {
-    const res = await fetch(`${BASE_URL}/categories/${categoryId}`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}`, {
       method: 'PUT',
       headers: getAuthHeaders(),
       body: JSON.stringify(formData)
@@ -64,9 +64,9 @@ const update = async (formData, categoryId) => {
   }
 }
 
-const deleteCategory = async (categoryId) => {
+const deleteCategory = async (projectId, categoryId) => {
   try {
-    const res = await fetch(`${BASE_URL}/categories/${categoryId}`, {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/categories/${categoryId}`, {
       method: 'DELETE',
       headers: getAuthHeaders()
     })

@@ -26,7 +26,7 @@ const ProjectDetails = ({ handleDeleteProject }) => {
       
         const expensesPromises = categoriesData.map(async (category) => {
           try {
-            const expenses = await expenseService.getByCategory(category.id)
+            const expenses = await expenseService.getByCategory(projectId, category.id)
             return { categoryId: category.id, expenses }
           } catch (err) {
             console.error(`Failed to fetch expenses for category ${category.id}:`, err)
@@ -208,19 +208,19 @@ const ProjectDetails = ({ handleDeleteProject }) => {
                     
                     <footer className={styles.categoryActions}>
                       <Link 
-                        to={`/categories/${category.id}`} 
+                        to={`/projects/${projectId}/categories/${category.id}`} 
                         className="btn btn--ghost btn--sm"
                       >
                         View Details
                       </Link>
                       <Link 
-                        to={`/categories/${category.id}/expenses/new`} 
+                        to={`/projects/${projectId}/categories/${category.id}/expenses/new`} 
                         className="btn btn--primary btn--sm"
                       >
                         Add Expense
                       </Link>
                       <Link 
-                        to={`/categories/${category.id}/edit`} 
+                        to={`/projects/${projectId}/categories/${category.id}/edit`} 
                         className="btn btn--secondary btn--sm"
                       >
                         Edit

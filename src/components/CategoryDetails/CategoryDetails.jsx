@@ -6,7 +6,7 @@ import * as authService from '../../services/authService'
 import styles from './CategoryDetails.module.css'
 
 const CategoryDetails = () => {
-  const { categoryId } = useParams()
+  const { projectId, categoryId } = useParams()
   const navigate = useNavigate()
   const [category, setCategory] = useState(null)
   const [expenses, setExpenses] = useState([])
@@ -22,8 +22,8 @@ const CategoryDetails = () => {
     try {
       setLoading(true)
       const [categoryData, expensesData] = await Promise.all([
-        categoryService.show(categoryId),
-        expenseService.getByCategory(categoryId)
+        categoryService.show(projectId, categoryId),
+        expenseService.getByCategory(projectId, categoryId)
       ])
       setCategory(categoryData)
       setExpenses(expensesData)
@@ -38,7 +38,7 @@ const CategoryDetails = () => {
   const handleDeleteExpense = async (expenseId) => {
     if (window.confirm('Are you sure you want to delete this expense?')) {
       try {
-        await expenseService.deleteExpense(expenseId)
+        await expenseService.deleteExpense(projectId, categoryId, expenseId)
         setExpenses(expenses.filter(expense => expense.id !== expenseId))
       } catch (err) {
         setError('Failed to delete expense')
@@ -50,8 +50,8 @@ const CategoryDetails = () => {
   const handleDeleteCategory = async () => {
     if (window.confirm('Are you sure you want to delete this category? All expenses will also be deleted.')) {
       try {
-        await categoryService.deleteCategory(categoryId)
-        navigate(`/projects/${category.project_id}`)
+        await categoryService.deleteCategory(projectId, categoryId)
+        navigate(`/projects/${projectId}`)
       } catch (err) {
         setError('Failed to delete category')
         console.error('Failed to delete category:', err)
@@ -155,13 +155,13 @@ const CategoryDetails = () => {
             {user && (
               <>
                 <Link 
-                  to={`/categories/${categoryId}/expenses/new`} 
+                  to={`/projects/${projectId}/categories/${categoryId}/expenses/new`} 
                   className="btn btn--primary"
                 >
                   Add Expense
                 </Link>
                 <Link 
-                  to={`/categories/${categoryId}/edit`} 
+                  to={`/projects/${projectId}/categories/${categoryId}/edit`} 
                   className="btn btn--secondary"
                 >
                   Edit Category
@@ -200,7 +200,7 @@ const CategoryDetails = () => {
           <header className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Expenses</h2>
             <Link 
-              to={`/categories/${categoryId}/expenses/new`} 
+              to={`/projects/${projectId}/categories/${categoryId}/expenses/new`} 
               className="btn btn--primary"
             >
               Add Expense
@@ -220,7 +220,7 @@ const CategoryDetails = () => {
                   
                   <footer className={styles.expenseActions}>
                     <Link 
-                      to={`/categories/${categoryId}/expenses/${expense.id}/edit`} 
+                      to={`/projects/${projectId}/categories/${categoryId}/expenses/${expense.id}/edit`} 
                       className="btn btn--ghost btn--sm"
                     >
                       Edit
@@ -244,7 +244,7 @@ const CategoryDetails = () => {
                 Start tracking your spending by adding your first expense.
               </p>
               <Link 
-                to={`/categories/${categoryId}/expenses/new`} 
+                to={`/projects/${projectId}/categories/${categoryId}/expenses/new`} 
                 className="btn btn--primary"
               >
                 Add First Expense
@@ -255,7 +255,7 @@ const CategoryDetails = () => {
 
         <div className={styles.navigation}>
           <Link 
-            to={`/projects/${category.project_id}`} 
+            to={`/projects/${projectId}`} 
             className="btn btn--ghost"
           >
             ← Back to Project

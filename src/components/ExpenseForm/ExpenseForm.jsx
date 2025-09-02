@@ -5,7 +5,7 @@ import * as categoryService from '../../services/categoryService'
 import styles from './ExpenseForm.module.css'
 
 const ExpenseForm = () => {
-  const { categoryId, expenseId } = useParams()
+  const { projectId, categoryId, expenseId } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
@@ -26,7 +26,7 @@ const ExpenseForm = () => {
 
   const fetchCategory = async () => {
     try {
-      const categoryData = await categoryService.show(categoryId)
+      const categoryData = await categoryService.show(projectId, categoryId)
       setCategory(categoryData)
     } catch (err) {
       setError('Failed to fetch category details')
@@ -37,7 +37,7 @@ const ExpenseForm = () => {
   const fetchExpense = async () => {
     try {
       setLoading(true)
-      const expense = await expenseService.show(categoryId, expenseId)
+      const expense = await expenseService.show(projectId, categoryId, expenseId)
       setFormData({
         name: expense.name,
         amount: (expense.amount / 100).toString() // Convert cents to dollars same as backend
@@ -84,12 +84,12 @@ const ExpenseForm = () => {
       }
 
       if (isEdit) {
-        await expenseService.update(expenseData, expenseId)
+        await expenseService.update(expenseData, projectId, categoryId, expenseId)
       } else {
-        await expenseService.create(expenseData, categoryId)
+        await expenseService.create(expenseData, projectId, categoryId)
       }
 
-      navigate(`/categories/${categoryId}`)
+      navigate(`/projects/${projectId}/categories/${categoryId}`)
     } catch (err) {
       setError(err.message || `Failed to ${isEdit ? 'update' : 'create'} expense`)
       console.error('Error saving expense:', err)
@@ -99,7 +99,7 @@ const ExpenseForm = () => {
   }
 
   const handleCancel = () => {
-    navigate(`/categories/${categoryId}`)
+    navigate(`/projects/${projectId}/categories/${categoryId}`)
   }
 
   if (loading && isEdit && !formData.name) {
