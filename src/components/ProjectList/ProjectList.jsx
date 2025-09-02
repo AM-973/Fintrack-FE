@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom'
 import styles from './ProjectList.module.css'
 import * as authService from '../../services/authService'
+
 const ProjectList = ({ projects, handleDeleteProject }) => {
   const user = authService.getUser()
-  if (!projects || projects.length === 0) {
+  
+  // Filter for projects to only show those belonging to the current user
+  const userProjects = projects ? projects.filter(project => 
+    project.userId === user?.id || project.user_id === user?.id
+  ) : []
+
+  if (!userProjects || userProjects.length === 0) {
     return (
       <main className={styles.container}>
         <div className="container">
@@ -41,7 +48,7 @@ const ProjectList = ({ projects, handleDeleteProject }) => {
         </header>
 
         <div className={styles.projectGrid}>
-          {projects.map((project) => (
+          {userProjects.map((project) => (
             <article key={project.id} className={`card ${styles.projectCard}`}>
               <header className={styles.cardHeader}>
                 <h2 className={styles.projectName}>{project.project_name}</h2>
