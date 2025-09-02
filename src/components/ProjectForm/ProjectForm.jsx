@@ -10,7 +10,8 @@ const ProjectForm = ({ handleAddProject, handleUpdateProject }) => {
   const [formData, setFormData] = useState({
     project_name: '',
     budget: '',
-    description: ''
+    description: '',
+    plan_type:''
   })
 
   const isEdit = Boolean(projectId)
@@ -111,6 +112,25 @@ const ProjectForm = ({ handleAddProject, handleUpdateProject }) => {
               required
             />
           </div>
+
+          <div className={styles.formGroup}>
+              <label htmlFor="planType" className={styles.label}>
+                Plan Type
+              </label>
+              <select
+                id="plan_type"
+                name="plan_type"
+                value={formData.plan_type}
+                onChange={handleChange}
+                className={styles.select}
+              >
+                <option value="">-- Select a plan --</option>
+                <option value="savings">Savings</option>
+                <option value="investment">Investment</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+
 
           <div className={styles.formGroup}>
             <label htmlFor="budget" className={styles.label}>
