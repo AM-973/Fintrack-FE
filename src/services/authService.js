@@ -11,7 +11,6 @@ const signUp = async (formData) => {
     })
     const data = await res.json()
 
-    // Checking if the response code was "ok"
     if (!res.ok) throw new Error('Something went wrong')
 
     if (data.token) {

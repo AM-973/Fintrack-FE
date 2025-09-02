@@ -1,0 +1,137 @@
+.navbar {
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  backdrop-filter: blur(8px);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) var(--spacing-6);
+  max-width: var(--container-xl);
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  text-decoration: none;
+  color: var(--color-gray-900);
+  transition: color var(--transition-base);
+}
+
+.brand:hover {
+  color: var(--color-primary);
+}
+
+.brandText {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-600);
+  text-decoration: none;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.navLink:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-50);
+}
+
+.navLinkActive {
+  color: var(--color-primary);
+  background-color: var(--color-primary-50);
+}
+
+.navLinkActive::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.welcome {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin-right: var(--spacing-2);
+}
+
+.profileBtn {
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+  
+  .navList {
+    gap: var(--spacing-4);
+  }
+  
+  .navLink {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-1) var(--spacing-2);
+  }
+  
+  .brandText {
+    font-size: var(--font-size-lg);
+  }
+  
+  .welcome {
+    display: none;
+  }
+  
+  .actions {
+    gap: var(--spacing-2);
+  }
+}
+
+@media (max-width: 640px) {
+  .nav {
+    display: none;
+  }
+  
+  .container {
+    justify-content: space-between;
+  }
+}
