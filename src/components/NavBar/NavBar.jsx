@@ -67,7 +67,7 @@ const NavBar = (props) => {
                   Welcome, {props.user.username}
                 </span>
               )}
-              <Link to='/dashboard' className={`btn btn--ghost ${styles.profileBtn}`} style={{cursor: 'not-allowed'}} disabled={true} >
+              <Link to='/' className={`btn btn--ghost ${styles.profileBtn}`} style={{cursor: 'not-allowed'}} disabled={true} >
                 Dashboard WIP 🇧🇭
               </Link>
               <button 
