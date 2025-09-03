@@ -36,13 +36,13 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <span className={styles.footerLink}>Category Management</span>
+                  <span className={styles.footerLink} style={{cursor: 'default'}}>Category Management</span>
                 </li>
                 <li>
-                  <span className={styles.footerLink}>Expense Monitoring</span>
+                  <span className={styles.footerLink} style={{cursor: 'default'}}>Expense Monitoring</span>
                 </li>
                 <li>
-                  <span className={styles.footerLink}>Budget Analytics</span>
+                  <span className={styles.footerLink} style={{cursor: 'default'}}>Budget Analytics</span>
                 </li>
               </ul>
             </div>
