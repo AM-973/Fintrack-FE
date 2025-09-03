@@ -199,11 +199,7 @@ fintrack-frontend/
 ├── ⚡ vite.config.js              # Vite configuration
 └── 📝 README.md                   # Project documentation
 ```
-<code_block_to_apply_changes_from>
-```
-Email: demo@fintrack.com
-Password: demo123
-```
+
 
 ## 🔧 API Integration
 
