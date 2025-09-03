@@ -109,8 +109,6 @@ const App = () => {
             <Route path='/projects/:projectId/categories/:categoryId/edit' element={<CategoryForm />} />
             <Route path='/projects/:projectId/categories/:categoryId/expenses/new' element={<ExpenseForm />} />
             <Route path='/projects/:projectId/categories/:categoryId/expenses/:expenseId/edit' element={<ExpenseForm />} />
-
-            {/* Chart for a specific category */}
             <Route path='/projects/:projectId/categories/:categoryId/charts' element={<PieChartDisplay />} />
           </>
         ) : (

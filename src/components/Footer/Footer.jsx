@@ -63,7 +63,7 @@ const Footer = () => {
               <h4 className={styles.linkTitle}>Support</h4>
               <ul className={styles.linkList}>
                 <li>
-                  <a href="#" className={styles.footerLink}>
+                  <a href="mailto:almatar973@gmail.com" className={styles.footerLink}>
                     Contact Us
                   </a>
                 </li>
