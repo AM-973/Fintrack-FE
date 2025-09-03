@@ -254,13 +254,17 @@ const CategoryDetails = () => {
         </section>
 
         <div className={styles.navigation}>
-          <Link 
-            to={`/projects/${projectId}`} 
-            className="btn btn--ghost"
-          >
+          <Link to={`/projects/${projectId}`} className="btn btn--ghost">
             ← Back to Project
           </Link>
+          <Link
+            to={`/projects/${projectId}/categories/${categoryId}/charts`}
+            className="btn btn--ghost"
+          >
+            View Charts
+          </Link>
         </div>
+
       </div>
     </main>
   )

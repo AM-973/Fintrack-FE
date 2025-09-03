@@ -251,6 +251,7 @@ const ProjectDetails = ({ handleDeleteProject }) => {
           <Link to="/projects" className="btn btn--ghost">
             ← Back to Projects
           </Link>
+          
         </div>
       </div>
     </main>

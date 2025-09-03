@@ -1,97 +1,115 @@
-import React, { useEffect, useState } from "react";
-import { PieChart, Pie, Tooltip, Legend, Cell } from "recharts";
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import * as categoryService from "../../services/categoryService";
+import * as expenseService from "../../services/expenseService";
+import styles from "./PieChartDisplay.module.css";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA336A", "#33AA77"];
+const COLORS = ["#0088FE", "#00C49F", "#FF8042", "#FFBB28", "#AA336A", "#33AA77", "#FF33AA", "#3366FF"];
 
-function PieCharts({ projectId }) {
-  const [expensesData, setExpensesData] = useState([]);
-  const [calcData, setCalcData] = useState([]);
+const PieChartDisplay = () => {
+  const { projectId, categoryId } = useParams();
+  const [categories, setCategories] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
-        // 1. Fetch project with categories + expenses
-        const res = await fetch(`http://localhost:8000/api/projects/${projectId}`);
-        const project = await res.json();
+        setLoading(true);
+        // Fetch categories
+        const categoriesData = await categoryService.getByProject(projectId);
+        setCategories(categoriesData);
 
-        // ----- Pie 1: Expenses -----
-        const expenses = project.categories.map((c) => ({
-          name: c.name,
-          value: c.expenses.reduce((sum, e) => sum + e.amount, 0),
-        }));
-        setExpensesData(expenses);
-
-        // ----- Pie 2: Remainder → backend calc -----
-        const totalExpenses = expenses.reduce((sum, e) => sum + e.value, 0);
-        const remainder = project.budget - totalExpenses;
-
-        if (remainder > 0) {
-          const calcRes = await fetch(
-            `http://localhost:8000/api/projects/${projectId}/calculate`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                budget: remainder,
-                plan_type: project.plan_type,
-                extra_config: project.extra_config || {},
-              }),
-            }
-          );
-
-          const calc = await calcRes.json();
-
-          const transformed = Object.entries(calc).map(([key, value]) => ({
-            name: key,
-            value: typeof value === "number" ? value : 0,
-          }));
-
-          setCalcData(transformed);
-        } else {
-          setCalcData([{ name: "Expenses exceeded", value: totalExpenses }]);
+        // Fetch expenses for selected category (if categoryId exists)
+        if (categoryId) {
+          const expensesData = await expenseService.getByCategory(projectId, categoryId);
+          setExpenses(expensesData);
         }
       } catch (err) {
-        console.error("Error loading pie charts:", err);
+        console.error(err);
+        setError("Failed to load chart data");
+      } finally {
+        setLoading(false);
       }
-    }
-
+    };
     fetchData();
-  }, [projectId]);
+  }, [projectId, categoryId]);
 
-  const renderPie = (data, title) => {
-    if (!data || data.length === 0) return null;
+  if (loading) return <div className={styles.loading}>Loading charts...</div>;
+  if (error) return <div className={styles.error}>{error}</div>;
 
-    return (
-      <div style={{ margin: "20px" }}>
-        <h3>{title}</h3>
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={120}
-            fill="#8884d8"
-            label
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
-      </div>
-    );
-  };
+  // Prepare data for Category Breakdown PieChart
+  const categoryChartData = categories.map((c) => ({
+    name: c.name,
+    value: c.budget, 
+  }));
+
+  // Prepare data for Expenses Breakdown PieChart
+  const expensesChartData = expenses.map((e) => ({
+    name: e.name,
+    value: e.amount,
+  }));
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-around" }}>
-      {renderPie(expensesData, "Expenses Breakdown")}
-      {renderPie(calcData, "Plan Allocation (Remainder)")}
-    </div>
-  );
-}
+    <main className={styles.container}>
+      <h1 className={styles.title}>Charts</h1>
+      <div className={styles.chartsWrapper}>
+        <div className={styles.chartCard}>
+          <h2>Category Budget Breakdown</h2>
+          <PieChart width={400} height={400}>
+            <Pie
+              data={categoryChartData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={120}
+              fill="#8884d8"
+              label={(entry) => entry.name}
+            >
+              {categoryChartData.map((entry, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip formatter={(value) => `$${(value / 100).toFixed(2)}`} />
+            <Legend />
+          </PieChart>
+        </div>
 
-export default PieCharts;
+        {categoryId && (
+          <div className={styles.chartCard}>
+            <h2> Current Category Expense Breakdown</h2>
+            <PieChart width={400} height={400}>
+              <Pie
+                data={expensesChartData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={120}
+                fill="#82ca9d"
+                label={(entry) => entry.name}
+              >
+                {expensesChartData.map((entry, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(value) => `$${(value / 100).toFixed(2)}`} />
+              <Legend />
+            </PieChart>
+          </div>
+        )}
+      </div>
+
+      <div className={styles.navigation}>
+        <Link to={`/projects/${projectId}`} className="btn btn--ghost">
+          ← Back to Project
+        </Link>
+      </div>
+    </main>
+  );
+};
+
+export default PieChartDisplay;
