@@ -14,8 +14,6 @@ import Landing from './components/Landing/Landing'
 import PieChartDisplay from './components/Chart/PieChartDisplay'
 import * as authService from './services/authService.js'
 import * as projectService from './services/projectService'
-import * as categoryService from './services/categoryService'
-import * as expenseService from './services/expenseService'
 
 const App = () => {
   const navigate = useNavigate()
@@ -74,6 +72,17 @@ const App = () => {
     }
   }
 
+  const handleUpdateProject = async (formData, projectId) => {
+    try {
+      await projectService.update(formData, projectId)
+      setProjects(projects.map((project) => project.id === projectId ? formData : project))
+      navigate(`/projects/${projectId}`)
+    } catch (err) {
+      console.error('Failed to update project:', err)
+    }
+  }
+
+
   const handleDeleteProject = async (projectId) => {
     try {
       await projectService.deleteProject(projectId)
@@ -84,6 +93,7 @@ const App = () => {
     }
   }
 
+
   return (
     <>
       <NavBar user={user} handleSignOut={handleSignOut} />
@@ -92,8 +102,8 @@ const App = () => {
           <>
             <Route path='/projects' element={<ProjectList projects={projects} user={user} handleDeleteProject={handleDeleteProject} />} />
             <Route path='/projects/new' element={<ProjectForm handleAddProject={handleAddProject} />} />
-            <Route path='/projects/:projectId' element={<ProjectDetails user={user} handleDeleteProject={handleDeleteProject} />} />
-            <Route path='/projects/:projectId/edit' element={<ProjectForm />} />
+            <Route path='/projects/:projectId' element={<ProjectDetails user={user} handleDeleteProject={handleDeleteProject}  />} />
+            <Route path='/projects/:projectId/edit' element={<ProjectForm handleUpdateProject={handleUpdateProject} />} />
             <Route path='/projects/:projectId/categories/new' element={<CategoryForm />} />
             <Route path='/projects/:projectId/categories/:categoryId' element={<CategoryDetails />} />
             <Route path='/projects/:projectId/categories/:categoryId/edit' element={<CategoryForm />} />
