@@ -95,7 +95,7 @@ const ProjectForm = ({ handleAddProject, handleUpdateProject }) => {
             }
           </p>
         </header>
-
+            
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGroup}>
             <label htmlFor="project_name" className={styles.label}>

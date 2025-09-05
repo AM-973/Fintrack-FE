@@ -4,6 +4,7 @@ import * as categoryService from '../../services/categoryService'
 import * as expenseService from '../../services/expenseService'
 import * as authService from '../../services/authService'
 import styles from './CategoryDetails.module.css'
+import PieChartDisplay from '../Charts/PieChartExpenses'
 
 const CategoryDetails = () => {
   const { projectId, categoryId } = useParams()
@@ -197,8 +198,11 @@ const CategoryDetails = () => {
         </div>
 
         <section className={styles.expensesSection}>
+        <PieChartDisplay/>
           <header className={styles.sectionHeader}>
+          
             <h2 className={styles.sectionTitle}>Expenses</h2>
+       
             <Link 
               to={`/projects/${projectId}/categories/${categoryId}/expenses/new`} 
               className="btn btn--primary"
@@ -254,14 +258,8 @@ const CategoryDetails = () => {
         </section>
 
         <div className={styles.navigation}>
-          <Link to={`/projects/${projectId}`} className="btn btn--ghost">
+          <Link to={`/projects/${projectId}`} className="btn btn--ghost" style={{justifyContent:'center', alignItems:'center', display:'flex'}}>
             ← Back to Project
-          </Link>
-          <Link
-            to={`/projects/${projectId}/categories/${categoryId}/charts`}
-            className="btn btn--ghost"
-          >
-            View Charts
           </Link>
         </div>
 

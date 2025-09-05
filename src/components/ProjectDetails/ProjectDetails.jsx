@@ -5,6 +5,8 @@ import * as categoryService from '../../services/categoryService'
 import * as expenseService from '../../services/expenseService'
 import * as authService from '../../services/authService'
 import styles from './ProjectDetails.module.css'
+import BarChartDisplay from '../Charts/PieChartDisplay'
+import PieChartDisplay from '../Charts/PieChartDisplay(int)'
 
 const ProjectDetails = ({ handleDeleteProject }) => {
   const { projectId } = useParams()
@@ -118,6 +120,7 @@ const ProjectDetails = ({ handleDeleteProject }) => {
             </div>
           </div>
           
+          
           <div className={styles.actions}>
             {user && (
               <>
@@ -143,8 +146,15 @@ const ProjectDetails = ({ handleDeleteProject }) => {
           <section className={styles.description}>
             <p>{project.description}</p>
           </section>
+          
         )}
+                    
+                    {categories.length > 1 ? (
+          <PieChartDisplay/>
 
+        ):(
+          <></>
+        )}
         <section className={styles.categoriesSection}>
           <header className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Categories</h2>
@@ -155,8 +165,11 @@ const ProjectDetails = ({ handleDeleteProject }) => {
               Add Category
             </Link>
           </header>
+          
 
           {categories.length > 0 ? (
+            <>
+            
             <div className={styles.categoriesGrid}>
               {categories.map((category) => {
                 const totalExpenses = calculateCategoryExpenses(category.id)
@@ -165,6 +178,7 @@ const ProjectDetails = ({ handleDeleteProject }) => {
                 const expenses = categoryExpenses[category.id] || []
                 
                 return (
+                  
                   <article key={category.id} className={`card ${styles.categoryCard}`}>
                     <header className={styles.categoryHeader}>
                       <h3 className={styles.categoryName}>{category.name}</h3>
@@ -172,6 +186,7 @@ const ProjectDetails = ({ handleDeleteProject }) => {
                         ${(category.budget / 100).toFixed(2)}
                       </div>
                     </header>
+                    
                     
                     {category.description && (
                       <p className={styles.categoryDescription}>
@@ -229,7 +244,9 @@ const ProjectDetails = ({ handleDeleteProject }) => {
                   </article>
                 )
               })}
+              
             </div>
+            </>
           ) : (
             <div className={styles.emptyState}>
               <div className={styles.emptyIcon}>📂</div>
@@ -248,10 +265,9 @@ const ProjectDetails = ({ handleDeleteProject }) => {
         </section>
 
         <div className={styles.navigation}>
-          <Link to="/projects" className="btn btn--ghost">
-            ← Back to Projects
+          <Link to={`/projects/${projectId}`} className="btn btn--ghost" style={{justifyContent:'center', alignItems:'center', display:'flex'}}>
+            ← Back to Project
           </Link>
-          
         </div>
       </div>
     </main>

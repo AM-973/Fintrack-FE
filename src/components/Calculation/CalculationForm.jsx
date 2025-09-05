@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { create } from "../../services/projectService"
-import BarChartDisplay from '../Chart/PieChartDisplay'
+import BarChartDisplay from '../Charts/PieChartDisplay'
 
 function CalculationForm() {
   const [formData, setFormData] = useState({
