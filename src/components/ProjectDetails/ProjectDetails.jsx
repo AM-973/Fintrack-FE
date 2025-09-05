@@ -16,7 +16,7 @@ const ProjectDetails = ({ handleDeleteProject }) => {
   const [categoryExpenses, setCategoryExpenses] = useState({})
   const [loading, setLoading] = useState(true)
   const user = authService.getUser()
-  
+
   useEffect(() => {
     const fetchProjectData = async () => {
       try {
@@ -24,8 +24,8 @@ const ProjectDetails = ({ handleDeleteProject }) => {
         const categoriesData = await categoryService.getByProject(projectId)
         setProject(projectData)
         setCategories(categoriesData)
-        
-      
+
+
         const expensesPromises = categoriesData.map(async (category) => {
           try {
             const expenses = await expenseService.getByCategory(projectId, category.id)
@@ -35,7 +35,7 @@ const ProjectDetails = ({ handleDeleteProject }) => {
             return { categoryId: category.id, expenses: [] }
           }
         })
-        
+
         const expensesResults = await Promise.all(expensesPromises)
         const expensesMap = {}
         expensesResults.forEach(({ categoryId, expenses }) => {
@@ -118,14 +118,17 @@ const ProjectDetails = ({ handleDeleteProject }) => {
             <div className={styles.budget}>
               Budget: ${(project.budget / 100).toFixed(2)}
             </div>
+            <div>
+              <p style={{ margin: '15px' }}>{project.description}</p>
+            </div>
           </div>
-          
-          
+
+
           <div className={styles.actions}>
             {user && (
               <>
-                <Link 
-                  to={`/projects/${projectId}/edit`} 
+                <Link
+                  to={`/projects/${projectId}/edit`}
                   className="btn btn--secondary"
                 >
                   Edit Project
@@ -142,110 +145,103 @@ const ProjectDetails = ({ handleDeleteProject }) => {
           </div>
         </header>
 
-        {project.description && (
-          <section className={styles.description}>
-            <p>{project.description}</p>
-          </section>
-          
-        )}
-                    
-                    {categories.length > 1 ? (
-          <PieChartDisplay/>
+        {categories.length > 1 ? (
+          <PieChartDisplay />
 
-        ):(
+        ) : (
           <></>
         )}
         <section className={styles.categoriesSection}>
           <header className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Categories</h2>
-            <Link 
-              to={`/projects/${projectId}/categories/new`} 
+            <Link
+              to={`/projects/${projectId}/categories/new`}
               className="btn btn--primary"
             >
               Add Category
             </Link>
           </header>
-          
+
 
           {categories.length > 0 ? (
             <>
-            
-            <div className={styles.categoriesGrid}>
-              {categories.map((category) => {
-                const totalExpenses = calculateCategoryExpenses(category.id)
-                const budgetProgress = calculateBudgetProgress(category.id, category.budget)
-                const budgetStatus = getBudgetStatus(category.id, category.budget)
-                const expenses = categoryExpenses[category.id] || []
-                
-                return (
-                  
-                  <article key={category.id} className={`card ${styles.categoryCard}`}>
-                    <header className={styles.categoryHeader}>
-                      <h3 className={styles.categoryName}>{category.name}</h3>
-                      <div className={styles.categoryBudget}>
-                        ${(category.budget / 100).toFixed(2)}
-                      </div>
-                    </header>
-                    
-                    
-                    {category.description && (
-                      <p className={styles.categoryDescription}>
-                        {category.description}
-                      </p>
-                    )}
-                    
-                    <div className={styles.budgetProgress}>
-                      <div className={styles.progressHeader}>
-                        <span className={styles.progressLabel}>
-                          Spent: ${(totalExpenses / 100).toFixed(2)}
-                        </span>
-                        <span className={`${styles.progressPercentage} ${styles[`progress--${budgetStatus}`]}`}>
-                          {budgetProgress.toFixed(1)}%
-                        </span>
-                      </div>
-                      <div className={styles.progressBar}>
-                        <div 
-                          className={`${styles.progressFill} ${styles[`progressFill--${budgetStatus}`]}`}
-                          style={{ width: `${budgetProgress}%` }}
-                        />
-                      </div>
-                    </div>
 
-                    <div className={styles.expensesSummary}>
-                      <div className={styles.expensesCount}>
-                        <span className={styles.expensesIcon}>💰</span>
-                        <span>{expenses.length} expense{expenses.length !== 1 ? 's' : ''}</span>
+              <div className={styles.categoriesGrid}>
+                {categories.map((category) => {
+                  const totalExpenses = calculateCategoryExpenses(category.id)
+                  const budgetProgress = calculateBudgetProgress(category.id, category.budget)
+                  const budgetStatus = getBudgetStatus(category.id, category.budget)
+                  const expenses = categoryExpenses[category.id] || []
+
+                  return (
+
+                    <article key={category.id} className={`card ${styles.categoryCard}`}>
+                      <header className={styles.categoryHeader}>
+                        <h3 className={styles.categoryName}>{category.name}</h3>
+                        <div className={styles.categoryBudget}>
+                          ${(category.budget / 100).toFixed(2)}
+                        </div>
+                      </header>
+
+
+                      {category.description && (
+                        <p className={styles.categoryDescription}>
+                          {category.description}
+                        </p>
+                      )}
+
+                      <div className={styles.budgetProgress}>
+                        <div className={styles.progressHeader}>
+                          <span className={styles.progressLabel}>
+                            Spent: ${(totalExpenses / 100).toFixed(2)}
+                          </span>
+                          <span className={`${styles.progressPercentage} ${styles['progress--' + budgetStatus]}`}>
+                            {budgetProgress.toFixed(1)}%
+                          </span>
+                        </div>
+                        <div className={styles.progressBar}>
+                          <div
+                            className={`${styles.progressFill} ${styles['progressFill--' + budgetStatus]}`}
+                            style={{ width: `${budgetProgress}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className={styles.remainingBudget}>
-                        ${((category.budget - totalExpenses) / 100).toFixed(2)} remaining
+
+                      <div className={styles.expensesSummary}>
+                        <div className={styles.expensesCount}>
+                          <span className={styles.expensesIcon}>💰</span>
+                          <span>{expenses.length} expense{expenses.length !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div className={styles.remainingBudget}>
+                          ${((category.budget - totalExpenses) / 100).toFixed(2)} remaining
+                        </div>
                       </div>
-                    </div>
-                    
-                    <footer className={styles.categoryActions}>
-                      <Link 
-                        to={`/projects/${projectId}/categories/${category.id}`} 
-                        className="btn btn--ghost btn--sm"
-                      >
-                        View Details
-                      </Link>
-                      <Link 
-                        to={`/projects/${projectId}/categories/${category.id}/expenses/new`} 
-                        className="btn btn--primary btn--sm"
-                      >
-                        Add Expense
-                      </Link>
-                      <Link 
-                        to={`/projects/${projectId}/categories/${category.id}/edit`} 
-                        className="btn btn--secondary btn--sm"
-                      >
-                        Edit
-                      </Link>
-                    </footer>
-                  </article>
-                )
-              })}
-              
-            </div>
+
+                      <footer className={styles.categoryActions}>
+                        <Link
+                          to={`/projects/${projectId}/categories/${category.id}`}
+                          className="btn btn--ghost btn--sm"
+                        >
+                          View Details
+                        </Link>
+                        <Link
+                          to={`/projects/${projectId}/categories/${category.id}/expenses/new`}
+                          className="btn btn--primary btn--sm"
+                        >
+                          Add Expense
+                        </Link>
+                        <Link
+                          to={`/projects/${projectId}/categories/${category.id}/edit`}
+                          className="btn btn--secondary btn--sm"
+                        >
+                          Edit
+                        </Link>
+                      </footer>
+                    </article>
+                  )
+                })}
+
+              </div>
             </>
           ) : (
             <div className={styles.emptyState}>
@@ -254,8 +250,8 @@ const ProjectDetails = ({ handleDeleteProject }) => {
               <p className={styles.emptyDescription}>
                 Add spending categories to organize your project budget.
               </p>
-              <Link 
-                to={`/projects/${projectId}/categories/new`} 
+              <Link
+                to={`/projects/${projectId}/categories/new`}
                 className="btn btn--primary"
               >
                 Add First Category
@@ -265,8 +261,8 @@ const ProjectDetails = ({ handleDeleteProject }) => {
         </section>
 
         <div className={styles.navigation}>
-          <Link to={`/projects/${projectId}`} className="btn btn--ghost" style={{justifyContent:'center', alignItems:'center', display:'flex'}}>
-            ← Back to Project
+          <Link to="/projects" className="btn btn--ghost" style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+            ← Back to Projects
           </Link>
         </div>
       </div>

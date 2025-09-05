@@ -25,7 +25,8 @@ const ProjectForm = ({ handleAddProject, handleUpdateProject }) => {
           setFormData({
             project_name: project.project_name,
             budget: (project.budget / 100).toString(), 
-            description: project.description || ''
+            description: project.description || '',
+            plan_type: project.plan_type || ''
           })
         } catch (err) {
           console.error('Failed to fetch project:', err)
@@ -53,7 +54,8 @@ const ProjectForm = ({ handleAddProject, handleUpdateProject }) => {
     try {
       const submitData = {
         ...formData,
-        budget: Math.round(parseFloat(formData.budget) * 100) // Convert dollars to cents same as backend
+        budget: Math.round(parseFloat(formData.budget) * 100), // Convert dollars to cents same as backend
+        plan_type: formData.plan_type || 'savings' 
       }
 
       if (isEdit) {
