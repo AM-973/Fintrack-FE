@@ -5,7 +5,7 @@ import * as categoryService from '../../services/categoryService'
 import * as expenseService from '../../services/expenseService'
 import * as authService from '../../services/authService'
 import styles from './ProjectDetails.module.css'
-import BarChartDisplay from '../Charts/PieChartDisplay'
+import PieChartExpenses from '../Charts/PieChartExpenses'
 import PieChartDisplay from '../Charts/PieChartDisplayCategories'
 
 const ProjectDetails = ({ handleDeleteProject }) => {

@@ -11,7 +11,7 @@ import CategoryForm from './components/CategoryForm/CategoryForm'
 import CategoryDetails from './components/CategoryDetails/CategoryDetails'
 import ExpenseForm from './components/ExpenseForm/ExpenseForm'
 import Landing from './components/Landing/Landing'
-import PieChartDisplay from './components/Charts/PieChartDisplay.jsx'
+import PieChartDisplay from './components/Charts/PieChartDisplayCategories'
 import * as authService from './services/authService.js'
 import * as projectService from './services/projectService'
 
