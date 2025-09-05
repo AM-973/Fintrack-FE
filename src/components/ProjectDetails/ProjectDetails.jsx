@@ -6,7 +6,7 @@ import * as expenseService from '../../services/expenseService'
 import * as authService from '../../services/authService'
 import styles from './ProjectDetails.module.css'
 import BarChartDisplay from '../Charts/PieChartDisplay'
-import PieChartDisplay from '../Charts/PieChartDisplay(int)'
+import PieChartDisplay from '../Charts/PieChartDisplayCategories'
 
 const ProjectDetails = ({ handleDeleteProject }) => {
   const { projectId } = useParams()
